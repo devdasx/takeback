@@ -1,0 +1,268 @@
+{
+  "source": "https://github.com/muun/recovery",
+  "path": "recovery_tool/electrum/servers.go",
+  "commit": "a33c463793c025937693a7dc5a67d5e16d076c3e",
+  "license": "MIT",
+  "servers": [
+    {
+      "host": "electrum.coinext.com.br",
+      "port": 50002
+    },
+    {
+      "host": "fulcrum.sethforprivacy.com",
+      "port": 50002
+    },
+    {
+      "host": "mainnet.foundationdevices.com",
+      "port": 50002
+    },
+    {
+      "host": "btc.lastingcoin.net",
+      "port": 50002
+    },
+    {
+      "host": "vmd71287.contaboserver.net",
+      "port": 50002
+    },
+    {
+      "host": "de.poiuty.com",
+      "port": 50002
+    },
+    {
+      "host": "electrum.jochen-hoenicke.de",
+      "port": 50006
+    },
+    {
+      "host": "btc.cr.ypto.tech",
+      "port": 50002
+    },
+    {
+      "host": "e.keff.org",
+      "port": 50002
+    },
+    {
+      "host": "vmd104014.contaboserver.net",
+      "port": 50002
+    },
+    {
+      "host": "e2.keff.org",
+      "port": 50002
+    },
+    {
+      "host": "fulcrum.grey.pw",
+      "port": 51002
+    },
+    {
+      "host": "fortress.qtornado.com",
+      "port": 443
+    },
+    {
+      "host": "f.keff.org",
+      "port": 50002
+    },
+    {
+      "host": "2ex.digitaleveryware.com",
+      "port": 50002
+    },
+    {
+      "host": "electrum.petrkr.net",
+      "port": 50002
+    },
+    {
+      "host": "electrum.stippy.com",
+      "port": 50002
+    },
+    {
+      "host": "electrum0.snel.it",
+      "port": 50002
+    },
+    {
+      "host": "ru.poiuty.com",
+      "port": 50002
+    },
+    {
+      "host": "electrum.privateservers.network",
+      "port": 50002
+    },
+    {
+      "host": "btc.electroncash.dk",
+      "port": 60002
+    },
+    {
+      "host": "bitcoin.aranguren.org",
+      "port": 50002
+    },
+    {
+      "host": "electrum.bitcoinserver.nl",
+      "port": 50514
+    },
+    {
+      "host": "btc.prompt.cash",
+      "port": 61002
+    },
+    {
+      "host": "fulc.bot.nu",
+      "port": 50002
+    },
+    {
+      "host": "bolt.schulzemic.net",
+      "port": 50002
+    },
+    {
+      "host": "node1.btccuracao.com",
+      "port": 50002
+    },
+    {
+      "host": "xtrum.com",
+      "port": 50002
+    },
+    {
+      "host": "electrum.bitaroo.net",
+      "port": 50002
+    },
+    {
+      "host": "btce.iiiiiii.biz",
+      "port": 50002
+    },
+    {
+      "host": "electrum.emzy.de",
+      "port": 50002
+    },
+    {
+      "host": "alviss.coinjoined.com",
+      "port": 50002
+    },
+    {
+      "host": "2azzarita.hopto.org",
+      "port": 50002
+    },
+    {
+      "host": "vmd104012.contaboserver.net",
+      "port": 50002
+    },
+    {
+      "host": "electrum.bitcoinlizard.net",
+      "port": 50002
+    },
+    {
+      "host": "btc.ocf.sh",
+      "port": 50002
+    },
+    {
+      "host": "bitcoins.sk",
+      "port": 56002
+    },
+    {
+      "host": "electrum-btc.leblancnet.us",
+      "port": 50002
+    },
+    {
+      "host": "helicarrier.bauerj.eu",
+      "port": 50002
+    },
+    {
+      "host": "electrum.neocrypto.io",
+      "port": 50002
+    },
+    {
+      "host": "caleb.vegas",
+      "port": 50002
+    },
+    {
+      "host": "smmalis37.ddns.net",
+      "port": 50002
+    },
+    {
+      "host": "electrum.kendigisland.xyz",
+      "port": 50002
+    },
+    {
+      "host": "electrum.hsmiths.com",
+      "port": 50002
+    },
+    {
+      "host": "vmd63185.contaboserver.net",
+      "port": 50002
+    },
+    {
+      "host": "blkhub.net",
+      "port": 50002
+    },
+    {
+      "host": "electrum.mmitech.info",
+      "port": 50002
+    },
+    {
+      "host": "elx.bitske.com",
+      "port": 50002
+    },
+    {
+      "host": "bitcoin.lu.ke",
+      "port": 50002
+    },
+    {
+      "host": "ex05.axalgo.com",
+      "port": 50002
+    },
+    {
+      "host": "walle.dedyn.io",
+      "port": 50002
+    },
+    {
+      "host": "eai.coincited.net",
+      "port": 50002
+    },
+    {
+      "host": "2electrumx.hopto.me",
+      "port": 56022
+    },
+    {
+      "host": "hodlers.beer",
+      "port": 50002
+    },
+    {
+      "host": "kareoke.qoppa.org",
+      "port": 50002
+    },
+    {
+      "host": "assuredly.not.fyi",
+      "port": 50002
+    },
+    {
+      "host": "electrumx.alexridevski.net",
+      "port": 50002
+    },
+    {
+      "host": "ragtor.duckdns.org",
+      "port": 50002
+    },
+    {
+      "host": "surely.not.fyi",
+      "port": 50002
+    },
+    {
+      "host": "btc.electrum.bitbitnet.net",
+      "port": 50002
+    },
+    {
+      "host": "gods-of-rock.screaminglemur.net",
+      "port": 50002
+    },
+    {
+      "host": "horsey.cryptocowboys.net",
+      "port": 50002
+    },
+    {
+      "host": "electrumx-btc.cryptonermal.net",
+      "port": 50002
+    },
+    {
+      "host": "electrum.coineuskal.com",
+      "port": 50002
+    },
+    {
+      "host": "electrum.blockstream.info",
+      "port": 50002
+    }
+  ]
+}

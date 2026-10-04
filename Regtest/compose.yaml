@@ -1,0 +1,21 @@
+name: takeback-master
+services:
+  bitcoin:
+    image: bitcoin/bitcoin:28.0
+    # Legacy local-only RPC credential retained to keep the existing regtest server and all its clients compatible; not app branding.
+    command: ['-regtest=1', '-server=1', '-txindex=1', '-mempoolfullrbf=1', '-rpcbind=0.0.0.0', '-rpcallowip=0.0.0.0/0', '-rpcuser=unsend', '-rpcpassword=regtest-only', '-fallbackfee=0.00001', '-blockfilterindex=1']
+    ports: ['127.0.0.1:52443:18443']
+    volumes: ['bitcoin:/home/bitcoin/.bitcoin']
+  fulcrum:
+    build: .
+    image: takeback-master-fulcrum:local
+    command: ['/config/fulcrum.conf']
+    environment:
+      SSL_CERTFILE: /tls/cert.pem
+      SSL_KEYFILE: /tls/key.pem
+    depends_on: [bitcoin]
+    ports: ['127.0.0.1:52002:50002']
+    volumes: ['fulcrum:/data']
+volumes:
+  bitcoin:
+  fulcrum:

@@ -1,0 +1,410 @@
+[
+  {
+    "id": "empty",
+    "input": "",
+    "kind": "empty",
+    "valid": false
+  },
+  {
+    "id": "spaces",
+    "input": " \n\t ",
+    "kind": "empty",
+    "valid": false
+  },
+  {
+    "id": "phrase-12",
+    "input": "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about",
+    "kind": "phrase",
+    "valid": true
+  },
+  {
+    "id": "phrase-15",
+    "input": "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon address",
+    "kind": "phrase",
+    "valid": true
+  },
+  {
+    "id": "phrase-18",
+    "input": "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon agent",
+    "kind": "phrase",
+    "valid": true
+  },
+  {
+    "id": "phrase-21",
+    "input": "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon admit",
+    "kind": "phrase",
+    "valid": true
+  },
+  {
+    "id": "phrase-24",
+    "input": "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon art",
+    "kind": "phrase",
+    "valid": true
+  },
+  {
+    "id": "phrase-whitespace",
+    "input": " \nabandon \t\nabandon \t\nabandon \t\nabandon \t\nabandon \t\nabandon \t\nabandon \t\nabandon \t\nabandon \t\nabandon \t\nabandon \t\nabout\n",
+    "kind": "phrase",
+    "valid": true
+  },
+  {
+    "id": "phrase-unicode-whitespace",
+    "input": "\u3000abandon\u00a0abandon\u00a0abandon\u00a0abandon\u00a0abandon\u00a0abandon\u00a0abandon\u00a0abandon\u00a0abandon\u00a0abandon\u00a0abandon\u00a0about\u2009",
+    "kind": "phrase",
+    "valid": true
+  },
+  {
+    "id": "phrase-uppercase",
+    "input": "ABANDON ABANDON ABANDON ABANDON ABANDON ABANDON ABANDON ABANDON ABANDON ABANDON ABANDON ABOUT",
+    "kind": "phrase",
+    "valid": true
+  },
+  {
+    "id": "phrase-incomplete",
+    "input": "abandon abandon abandon",
+    "kind": "incomplete",
+    "valid": false
+  },
+  {
+    "id": "phrase-too-many",
+    "input": "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon",
+    "kind": "incomplete",
+    "valid": false
+  },
+  {
+    "id": "phrase-checksum",
+    "input": "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon",
+    "kind": "invalid",
+    "valid": false
+  },
+  {
+    "id": "prompt-phrase",
+    "input": "orbit velvet maple ranch silent ember harbor tiger candle wisdom fossil lunar",
+    "kind": "invalid",
+    "valid": false
+  },
+  {
+    "id": "wif-compressed",
+    "input": "KwDiBf89QgGbjEhKnhXJuH7LrciVrZi3qYjgd9M7rFU73sVHnoWn",
+    "kind": "compressed",
+    "valid": true
+  },
+  {
+    "id": "wif-uncompressed",
+    "input": "5HpHagT65TZzG1PH3CSu63k8DbpvD8s5ip4nEB3kEsreAnchuDf",
+    "kind": "uncompressed",
+    "valid": true
+  },
+  {
+    "id": "wif-L",
+    "input": "L5oLkpV3aqBjhki6LmvChTCV6odsp4SXM6FfU2Gppt5kFLaHLuZ9",
+    "kind": "compressed",
+    "valid": true
+  },
+  {
+    "id": "wif-bad-checksum",
+    "input": "KwDiBf89QgGbjEhKnhXJuH7LrciVrZi3qYjgd9M7rFU73sVHnoW2",
+    "kind": "invalid",
+    "valid": false
+  },
+  {
+    "id": "wif-bad-flag",
+    "input": "KwDiBf89QgGbjEhKnhXJuH7LrciVrZi3qYjgd9M7rFU73sfZr2ym",
+    "kind": "invalid",
+    "valid": false
+  },
+  {
+    "id": "wif-zero",
+    "input": "KwDiBf89QgGbjEhKnhXJuH7LrciVrZi3qYjgd9M7rFU73Nd2Mcv1",
+    "kind": "invalid",
+    "valid": false
+  },
+  {
+    "id": "wif-order",
+    "input": "L5oLkpV3aqBjhki6LmvChTCV6odsp4SXM6FfU2Gppt5kFqRzExJJ",
+    "kind": "invalid",
+    "valid": false
+  },
+  {
+    "id": "mini-22",
+    "input": "S111111111111111111148",
+    "kind": "mini",
+    "valid": true
+  },
+  {
+    "id": "mini-26",
+    "input": "S1111111111111111111111141",
+    "kind": "mini",
+    "valid": true
+  },
+  {
+    "id": "mini-30",
+    "input": "S111111111111111111111111111AS",
+    "kind": "mini",
+    "valid": true
+  },
+  {
+    "id": "mini-published",
+    "input": "S6c56bnXQiBjk9mqSYE7ykVQ7NzrRy",
+    "kind": "mini",
+    "valid": true
+  },
+  {
+    "id": "mini-bad-checksum",
+    "input": "S111111111111111111111",
+    "kind": "invalid",
+    "valid": false
+  },
+  {
+    "id": "mini-invalid-alphabet",
+    "input": "S000000000000000000000",
+    "kind": "invalid",
+    "valid": false
+  },
+  {
+    "id": "mini-bad-length",
+    "input": "S1111111111111111111111",
+    "kind": "invalid",
+    "valid": false
+  },
+  {
+    "id": "hex-one",
+    "input": "0000000000000000000000000000000000000000000000000000000000000001",
+    "kind": "hex",
+    "valid": true
+  },
+  {
+    "id": "hex-order-minus-one",
+    "input": "fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364140",
+    "kind": "hex",
+    "valid": true
+  },
+  {
+    "id": "hex-prefix",
+    "input": "0x0000000000000000000000000000000000000000000000000000000000000001",
+    "kind": "hex",
+    "valid": true
+  },
+  {
+    "id": "hex-uppercase",
+    "input": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364140",
+    "kind": "hex",
+    "valid": true
+  },
+  {
+    "id": "hex-zero",
+    "input": "0000000000000000000000000000000000000000000000000000000000000000",
+    "kind": "invalid",
+    "valid": false
+  },
+  {
+    "id": "hex-order",
+    "input": "fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141",
+    "kind": "invalid",
+    "valid": false
+  },
+  {
+    "id": "hex-too-big",
+    "input": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "kind": "invalid",
+    "valid": false
+  },
+  {
+    "id": "hex-short",
+    "input": "111111111111111111111111111111111111111111111111111111111111111",
+    "kind": "invalid",
+    "valid": false
+  },
+  {
+    "id": "hex-long",
+    "input": "11111111111111111111111111111111111111111111111111111111111111111",
+    "kind": "invalid",
+    "valid": false
+  },
+  {
+    "id": "hex-not-hex",
+    "input": "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
+    "kind": "invalid",
+    "valid": false
+  },
+  {
+    "id": "hex-internal-space",
+    "input": "11111111111111111111111111111111 11111111111111111111111111111111",
+    "kind": "invalid",
+    "valid": false
+  },
+  {
+    "id": "xprv-0",
+    "input": "xprv9s21ZrQH143K24MoUenttLtWQNeeDZvsczTUeCMmb85Mn2qbbmZbpre8QqPqPmd8WTHi9dvj1xdRPwwyuutTwApKSzkJwpuVB4m6KdwVJXY",
+    "kind": "xprv",
+    "valid": true
+  },
+  {
+    "id": "xprv-3",
+    "input": "xprv9xfR9CxUydbGrkBvYzqFZ1RpnyxozdMEaReLgKUSZtiEYpnhqSH5gw567M2QbWhpf1pJckU4UKR8dCSuhDgkxdLWGVcJfPrXE1VKP64srwP",
+    "kind": "xprv",
+    "valid": true
+  },
+  {
+    "id": "yprv-0",
+    "input": "yprvABrGsX5C9jansMYvK1aX6Rz1aLo6ABvNY6yhRbFey8TEq8eprRjASvJGS3MRPgH3v6QWu7XHUcyyHEZYdcJUjQVvKLSjXjiySnpjiEkQfCm",
+    "kind": "yprv",
+    "valid": true
+  },
+  {
+    "id": "yprv-3",
+    "input": "yprvAHVgSsdQ8K8ki3P3PMcsm6XKxx7FwFLjVYAZTiNKwu67bvbw66SeJzjE8YyzbRMk4ew7NE4cvymgWV4UQv6mks278qJjFJg1VjYxmcJ3Rsn",
+    "kind": "yprv",
+    "valid": true
+  },
+  {
+    "id": "zprv-0",
+    "input": "zprvAWgYBBk7JR8Giek39NN9JX5WkJwY6ousTDVvCz9YM8q7tEU475tj4yxQTFK1PavyKjXKeb7qwHLXAXB7MJiVXeBXBg9A7eYTiWtP6orvPvZ",
+    "kind": "zprv",
+    "valid": true
+  },
+  {
+    "id": "zprv-3",
+    "input": "zprvAcKwkYJKGzgEZLaADiQVyBcq8vFhssLEQegnF7GDKuTzf2RALkcCw4PN9kwabL1fUJ3v7hfBPe8EPmg38cWnZ6hi1B19qDVVmTccADqwwid",
+    "kind": "zprv",
+    "valid": true
+  },
+  {
+    "id": "extended-depth-1",
+    "input": "xprv9tu9RdvJDMiJvNpF3c1kD1ip9M87fBt3dRqmWb2w3Qudo21Jyn46zLvvSeXG7uYX646xLK4xByUH82PrFBn4Bt4xe5446KzjqMXmtEdBesU",
+    "kind": "invalid",
+    "valid": false
+  },
+  {
+    "id": "extended-depth-2",
+    "input": "xprv9vnHHRSKRfPJn9Si5bUWX9V9wa34MuzVhKyAtSubiMGYDvx824ZSn2WXCDo6rqwz2kY6yP2fT1gLoVtA7YYMFJAtiisynfHwf5sDwE7gnUe",
+    "kind": "invalid",
+    "valid": false
+  },
+  {
+    "id": "extended-depth-4",
+    "input": "xprv9zYYzzUMrGjJVghe9aQ39R1qY1rwmNDPq8DyeAew4DzM5kqk6da8MPfihNLnLikuv9QQFWx5y66UASrmrG4wN8Nkt2XqBKtMJYY83KS9QX8",
+    "kind": "invalid",
+    "valid": false
+  },
+  {
+    "id": "extended-depth-255",
+    "input": "xprvJ8qZSyPc6kVgspWdmFDod1uWZtyg1c8ChiG9EzvHZUTEtt3Jz4Ym3g57GMtiAAJWd8Enff3e3eJPzQN6n7km9S3o1iwCiqLWrkhs6VPoVXk",
+    "kind": "invalid",
+    "valid": false
+  },
+  {
+    "id": "extended-root-parent",
+    "input": "xprv9s21ZrQZgP7FNcwMHZ4gJj7EdFZCbkk1NK3EVA98PdJCPrBLUW1sKhBgBTbbQqJ2bnDd52X4iYRHbCBkQiQ6rQeGAPbUQHr8zLTv6F58Avy",
+    "kind": "invalid",
+    "valid": false
+  },
+  {
+    "id": "extended-root-child",
+    "input": "xprv9s21ZrQH143K4cBn1cYytsxUM8DAxTmbZXiN8jAGNUYjN74VwVYmCfMKh5FRNy949MfohF7EvwGDSYuYNq1m8Ty2ZRE8PzhY1dCKqDm9HjK",
+    "kind": "invalid",
+    "valid": false
+  },
+  {
+    "id": "extended-zero",
+    "input": "xprv9s21ZrQH143K24MoUenttLtWQNeeDZvsczTUeCMmb85Mn2qbbmZbpre8QqPqPmd8WTHi9dvj1xdRPwwyuutTwApKSzkJwpuVB4m6KY4fcwx",
+    "kind": "invalid",
+    "valid": false
+  },
+  {
+    "id": "extended-order",
+    "input": "xprv9s21ZrQH143K24MoUenttLtWQNeeDZvsczTUeCMmb85Mn2qbbmZbpre8QsLaa15AMsxwHTWRvYFRMGYgJA9H3rQQmvZRw7t4URk73pRvhmc",
+    "kind": "invalid",
+    "valid": false
+  },
+  {
+    "id": "extended-public-marker",
+    "input": "xprv9s21ZrQH143K24MoUenttLtWQNeeDZvsczTUeCMmb85Mn2qbbmZbpre8QuHKkEXCDJeARH68q7sRJb9Xk97uEaW52GtXS8HHANmsJv28gsV",
+    "kind": "invalid",
+    "valid": false
+  },
+  {
+    "id": "xpub",
+    "input": "xpub661MyMwAqRbcEYSGagKuFUqExQV8d2eizDP5SamP9TcLeqAk9JsrNexcG7MDch4KFDn8q8MASAtJEQfviZUhf6FVHbir7V5wN9h8zrFNiQg",
+    "kind": "public",
+    "valid": false
+  },
+  {
+    "id": "ypub",
+    "input": "ypub6QqdH2c5z7965qdPR37XTZvk8NdaZeeDuKuJDyfGXTzDhvyyPy3QzickHKJocbiEertwabwitqEr7hHVSFtiTKw69wRGhPuRdsknPPQDj6o",
+    "kind": "public",
+    "valid": false
+  },
+  {
+    "id": "zpub",
+    "input": "zpub6jftahH18ngZw8pWFPu9ff2FJLn2WGdipSRX1NZ9uUN6m2oCedCycnGtJXGPcWNA4W1kL5YHMVbPzyu49xJjFZch2H7hHJiuubpRmxEKBT2",
+    "kind": "public",
+    "valid": false
+  },
+  {
+    "id": "address",
+    "input": "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
+    "kind": "public",
+    "valid": false
+  },
+  {
+    "id": "p2sh",
+    "input": "3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy",
+    "kind": "public",
+    "valid": false
+  },
+  {
+    "id": "bech32",
+    "input": "BC1QW508D6QEJXTDG4Y5R3ZARVARY0C5XW7KV8F3T4",
+    "kind": "public",
+    "valid": false
+  },
+  {
+    "id": "descriptor",
+    "input": "addr(1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa)",
+    "kind": "public",
+    "valid": false
+  },
+  {
+    "id": "public-key",
+    "input": "0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798",
+    "kind": "public",
+    "valid": false
+  },
+  {
+    "id": "private-descriptor",
+    "input": "wpkh(KwDiBf89QgGbjEhKnhXJuH7LrciVrZi3qYjgd9M7rFU73sVHnoWn)",
+    "kind": "invalid",
+    "valid": false
+  },
+  {
+    "id": "private-xprv-descriptor",
+    "input": "wpkh(xprv9s21ZrQH143K24MoUenttLtWQNeeDZvsczTUeCMmb85Mn2qbbmZbpre8QqPqPmd8WTHi9dvj1xdRPwwyuutTwApKSzkJwpuVB4m6KdwVJXY/0/*)",
+    "kind": "invalid",
+    "valid": false
+  },
+  {
+    "id": "testnet-c",
+    "input": "cMahea7zqjxrtgAbB7LSGbcQUr1uX1ojuat9jZodMN87JcbXMTcA",
+    "kind": "testnet",
+    "valid": false
+  },
+  {
+    "id": "testnet-9",
+    "input": "91avARGdfge8E4tZfYLoxeJ5sGBdNJQH4kvjJoQFacbgwmaKkrx",
+    "kind": "testnet",
+    "valid": false
+  },
+  {
+    "id": "testnet-tprv",
+    "input": "tprv8ZgxMBicQKsPcsbL9DeQ3zWViW4rT5xsxYNbWcnE56ZqZdagb8uMLc1aL1ZVQ91SstpV9jYVBKDDroVj38EQkE5uydxccBdY6AWWmLZ6NkR",
+    "kind": "testnet",
+    "valid": false
+  },
+  {
+    "id": "unknown",
+    "input": "not a valid secret",
+    "kind": "invalid",
+    "valid": false
+  }
+]

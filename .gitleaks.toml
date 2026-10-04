@@ -1,0 +1,24 @@
+title = "Takeback public fixtures"
+[extend]
+useDefault = true
+
+[[rules]]
+id = "curl-auth-user"
+[[rules.allowlists]]
+description = "Disposable loopback regtest RPC credential, documented in TESTING.md"
+condition = "AND"
+paths = ['''(^|/)Regtest/run-regtest\.sh$''']
+regexTarget = "line"
+regexes = ['''curl -s --user unsend:regtest-only''']
+
+[[rules]]
+id = "generic-api-key"
+[[rules.allowlists]]
+description = "UserDefaults preference name, not an API credential"
+condition = "AND"
+paths = ['''(^|/)Takeback/Electrum/ElectrumPool\.swift$''']
+regexTarget = "line"
+regexes = ['''static let storeKey = "electrum\.probes\.v2"''']
+[[rules.allowlists]]
+description = "Published BIP39/BIP32/BIP84/BIP86 deterministic test vectors; never use with funds"
+paths = ['''(^|/)TakebackTests/OfficialHDVectors\.swift$''']

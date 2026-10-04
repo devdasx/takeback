@@ -1,0 +1,4 @@
+Geist Sans, Vercel
+https://github.com/vercel/geist-font
+Revision: 10dc7658f13c38a474cde201bb09a4617267545b
+Unmodified static TTF files; SIL Open Font License 1.1 (OFL.txt).

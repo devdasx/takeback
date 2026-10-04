@@ -1,0 +1,45 @@
+name: Build and source checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  source-and-build:
+    runs-on: macos-26
+    timeout-minutes: 30
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.6.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Toolchain
+        run: xcodebuild -version
+      - name: Publication hygiene and documentation links
+        run: python3 Scripts/check-publication.py
+      - name: Verify vendored source checksums
+        run: shasum -a 256 -c Vendor/SHA256SUMS
+      - name: Key validation vectors
+        run: sh Scripts/validate-key-vectors.sh
+      - name: Unsigned Release build
+        run: |
+          xcodebuild -project Takeback.xcodeproj -scheme Takeback \
+            -configuration Release -destination 'generic/platform=iOS' \
+            -derivedDataPath "$RUNNER_TEMP/Takeback-Release" \
+            CODE_SIGNING_ALLOWED=NO build
+      - name: Compile app and test targets
+        run: |
+          xcodebuild build-for-testing -project Takeback.xcodeproj -scheme Takeback \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath "$RUNNER_TEMP/Takeback-Tests" \
+            CODE_SIGNING_ALLOWED=NO

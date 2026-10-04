@@ -1,0 +1,50 @@
+{
+  "reference": "bip32 5.0.0; Python hashlib.pbkdf2_hmac, sha256, ripemd160; Unicode NFKD",
+  "mnemonic": "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about",
+  "vectors": [
+    {
+      "passphrase": "",
+      "fingerprint": "73C5DA0A"
+    },
+    {
+      "passphrase": "TREZOR",
+      "fingerprint": "B4E3F5ED"
+    },
+    {
+      "passphrase": " TREZOR",
+      "fingerprint": "AD5F94F4"
+    },
+    {
+      "passphrase": "TREZOR ",
+      "fingerprint": "1727E924"
+    },
+    {
+      "passphrase": " TREZOR ",
+      "fingerprint": "9A2A7B73"
+    },
+    {
+      "passphrase": "trezor",
+      "fingerprint": "F28B7C1D"
+    },
+    {
+      "passphrase": " ",
+      "fingerprint": "6F3D8016"
+    },
+    {
+      "passphrase": "café",
+      "fingerprint": "75902ABE"
+    },
+    {
+      "passphrase": "café",
+      "fingerprint": "75902ABE"
+    },
+    {
+      "passphrase": "秘密🔑",
+      "fingerprint": "41A6E19F"
+    },
+    {
+      "passphrase": "a\u0000b",
+      "fingerprint": "F2011A91"
+    }
+  ]
+}

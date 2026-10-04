@@ -1,0 +1,6 @@
+English BIP39 wordlist
+Source: https://github.com/bitcoin/bips/blob/master/bip-0039/english.txt
+Retrieved: 2026-10-04
+Specification: https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki
+Authors: Marek Palatinus, Pavol Rusnak, Aaron Voisine, Sean Bowe
+The BIP39 specification is MIT licensed. This unmodified list contains the standard public mnemonic vocabulary, not user recovery phrases.
