@@ -65,7 +65,7 @@ import XCTest
         row("c", in: app).tap()
         let done = app.buttons["paymentExplanation.done"]
         XCTAssertTrue(done.waitForExistence(timeout: 5)); XCTAssertTrue(done.isHittable)
-        XCTAssertTrue(app.toolbars.buttons.matching(identifier: done.identifier).firstMatch.exists)
+        XCTAssertEqual(app.buttons.matching(identifier: done.identifier).firstMatch.frame.height, 60, accuracy: 1)
         capture("payments-explanation-AX5", app)
         XCUIDevice.shared.orientation = .landscapeLeft
         defer { XCUIDevice.shared.orientation = .portrait }

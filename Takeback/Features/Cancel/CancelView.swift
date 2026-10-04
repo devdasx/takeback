@@ -31,11 +31,9 @@ struct CancelView: View {
             }
         }
         .background(Theme.bg.ignoresSafeArea()).takebackStyle().nativeNavigation(title: model.mode.title)
-        .toolbar {
-            NativeBottomBar {
-                PrimaryButton(title: model.mode.title, symbol: model.authorizer.symbol.isEmpty ? nil : model.authorizer.symbol, isEnabled: model.canCancel, action: model.cancelPayment)
-                    .accessibilityIdentifier("cancel.submit")
-            }
+        .bottomActions {
+            PrimaryButton(title: model.mode.title, symbol: model.authorizer.symbol.isEmpty ? nil : model.authorizer.symbol, isEnabled: model.canCancel, action: model.cancelPayment)
+                .accessibilityIdentifier("cancel.submit")
         }
         .sheet(isPresented: $showsFee) { NewFeeSheet(model: model) }
         .alert("Couldn’t verify it’s you", isPresented: $model.authenticationFailed) { Button("OK", role: .cancel) {} } message: { Text("Try again.") }

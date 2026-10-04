@@ -37,7 +37,7 @@ No account, hosted wallet, or payment history to manage. The app holds imported 
 - **Import locally:** paste, scan a QR code, or select a QR image; the reusable scanner includes supported BC-UR and BBQr multipart formats.
 - **Use your server:** configure a mempool-compatible API and Electrum endpoints, with connection checks and fallback handling.
 - **Track the replacement:** Pending → Confirmed status and an explorer link after sending.
-- **Use native controls:** system navigation and back gestures, sheets, bottom toolbars, light/dark appearance, and adaptive iPhone/iPad layouts.
+- **Use native controls:** system navigation and back gestures, sheets, solid pinned bottom buttons, light/dark appearance, and adaptive iPhone/iPad layouts.
 
 ## How it works
 

@@ -58,14 +58,12 @@ struct SearchPathsView: View {
                 }
             }
         }.background(Theme.bg.ignoresSafeArea()).takebackStyle().nativeNavigation()
-        .toolbar {
-            NativeBottomBar {
-                if let plan {
-                    PrimaryButton(title: "Done") {
-                        attemptedDone = true
-                        if selection.isValid(for: plan) { router.goBack() }
-                    }.accessibilityIdentifier("paths.done")
-                }
+        .bottomActions {
+            if let plan {
+                PrimaryButton(title: "Done") {
+                    attemptedDone = true
+                    if selection.isValid(for: plan) { router.goBack() }
+                }.accessibilityIdentifier("paths.done")
             }
         }
             .onAppear { session.ensureSearchSelection() }

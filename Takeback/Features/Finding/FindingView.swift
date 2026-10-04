@@ -22,9 +22,9 @@ struct FindingView: View {
         }
         .background(Theme.bg.ignoresSafeArea()).takebackStyle()
         .nativeNavigation(title: model.label)
-        .toolbar { NativeBottomBar {
+        .bottomActions {
             actions
-        } }
+        }
         .onAppear { if automaticallyStart, case .searching = model.outcome { model.start() } }
         .onDisappear { model.release() }
         .onChange(of: session.wipeGeneration) { _, _ in back() }
@@ -109,8 +109,6 @@ struct FindingView: View {
                     model.stop(); router.showPayments(result.payments)
                 }.accessibilityIdentifier("finding.show")
             case .none:
-                // Keep the primary action visible when the system moves secondary
-                // actions into the native toolbar overflow menu on narrow screens.
                 PrimaryButton(title: "Try a different key", action: differentKey).accessibilityIdentifier("finding.different")
                 if model.isPhrase { SecondaryButton(title: "Search 100 addresses") { model.start(gap: 100) }.accessibilityIdentifier("finding.deep") }
             case .confirmed: PrimaryButton(title: "Try a different key", action: differentKey)

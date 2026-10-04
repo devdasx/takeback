@@ -37,12 +37,12 @@ struct WelcomeView: View {
                 Button(action: router.openSettings) { Image(systemName: "gearshape") }
                     .accessibilityLabel("Settings").accessibilityIdentifier("welcome.settings")
             }
-            NativeBottomBar {
-                SecondaryButton(title: "How it works", action: router.showHowItWorks)
-                    .accessibilityIdentifier("welcome.howItWorks")
-                PrimaryButton(title: "Cancel a payment", action: router.cancelTransaction)
-                    .accessibilityIdentifier("welcome.cancel")
-            }
+        }
+        .bottomActions(welcome: true) {
+            PrimaryButton(title: "Cancel a payment", height: 56, action: router.cancelTransaction)
+                .accessibilityIdentifier("welcome.cancel")
+            SecondaryButton(title: "How it works", plain: true, height: 48, action: router.showHowItWorks)
+                .accessibilityIdentifier("welcome.howItWorks")
         }
     }
     private func column(_ metrics: LayoutMetrics) -> some View {
@@ -61,16 +61,21 @@ struct WelcomeView: View {
                             .padding(.top, wide ? 0 : short ? 12 : 24)
                         message(metrics, width: width).padding(.top, wide ? 48 : short ? 20 : 28)
                         trustPoints.frame(maxWidth: wide ? 420 : .infinity).padding(.top, textGap)
-                    }.frame(maxWidth: .infinity).frame(minHeight: area.size.height, alignment: wide ? .center : .center)
+                    }
+                    .frame(maxWidth: wide ? 520 : .infinity)
+                    .padding(.horizontal, padding)
+                    .frame(maxWidth: .infinity)
+                    .frame(minHeight: area.size.height, alignment: .center)
                 }.scrollBounceBehavior(.basedOnSize).accessibilityIdentifier("welcome.content")
             }
-        }.frame(maxWidth: wide ? 520 : .infinity).padding(.horizontal, padding).frame(maxWidth: .infinity)
+        }.frame(maxWidth: .infinity)
     }
     private func split(_ metrics: LayoutMetrics) -> some View {
         let width = max(1, min(440, (metrics.safeSize.width - 112 - 72) / 2))
-        return HStack(spacing: 72) {
+        return HStack(spacing: 0) {
             ScrollView {
                 WelcomeHero(mode: .split, isShort: false).frame(maxWidth: 380)
+                    .frame(maxWidth: .infinity).padding(.leading, 56).padding(.trailing, 36)
                     .frame(minHeight: max(1, metrics.safeSize.height), alignment: .center)
             }.scrollBounceBehavior(.basedOnSize).frame(maxWidth: .infinity)
             ViewThatFits(in: .vertical) {
@@ -78,17 +83,19 @@ struct WelcomeView: View {
                     message(metrics, width: width)
                     trustPoints.frame(maxWidth: 380)
                 }.fixedSize(horizontal: false, vertical: true).padding(.bottom, 24)
-                VStack(alignment: .leading, spacing: 24) {
-                    ScrollView {
-                        VStack(alignment: .leading, spacing: 24) {
-                            message(metrics, width: width)
-                            trustPoints.frame(maxWidth: 380)
-                        }
-                    }.scrollBounceBehavior(.basedOnSize)
-                }
-            }.frame(maxWidth: width, maxHeight: .infinity, alignment: .leading).frame(maxWidth: .infinity)
+                    .frame(maxWidth: width, alignment: .leading)
+                    .padding(.leading, 36).padding(.trailing, 56).frame(maxWidth: .infinity, alignment: .leading)
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 24) {
+                        message(metrics, width: width)
+                        trustPoints.frame(maxWidth: 380)
+                    }
+                    .frame(maxWidth: width, alignment: .leading)
+                    .padding(.leading, 36).padding(.trailing, 56).frame(maxWidth: .infinity, alignment: .leading)
+                }.scrollBounceBehavior(.basedOnSize)
+            }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
 
-        }.padding(.horizontal, 56)
+        }
     }
     private func message(_ metrics: LayoutMetrics, width: CGFloat) -> some View {
         let split = metrics.mode == .split

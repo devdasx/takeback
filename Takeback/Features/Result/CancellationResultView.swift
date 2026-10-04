@@ -34,9 +34,9 @@ struct CancellationResultView: View {
         }
         .background(Theme.bg.ignoresSafeArea()).takebackStyle()
         .nativeNavigation(backEnabled: model.state != .broadcasting)
-        .toolbar { NativeBottomBar {
+        .bottomActions(isVisible: model.state != .broadcasting) {
             if model.state != .broadcasting { actions }
-        } }
+        }
         .interactiveDismissDisabled(model.state == .broadcasting)
         .sheet(isPresented: $showsExplorer) { if let explorerURL { SourceBrowser(url: explorerURL).ignoresSafeArea() } }
         .sheet(isPresented: $detailsExpanded) {

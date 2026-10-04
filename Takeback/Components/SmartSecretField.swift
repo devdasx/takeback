@@ -6,10 +6,8 @@ import UIKit
 struct SmartSecretField: View {
     @ObservedObject var model: EnterKeyModel
     let height: CGFloat
-    var onFind: (() -> Void)? = nil
-    var onEditingChanged: (Bool) -> Void = { _ in }
     var body: some View {
-        SmartSecureEditor(model: model, onFind: onFind, onEditingChanged: onEditingChanged)
+        SmartSecureEditor(model: model)
             .frame(height: height)
             .background(Theme.card, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
             .overlay {
@@ -24,8 +22,6 @@ struct SmartSecretField: View {
 
 private struct SmartSecureEditor: UIViewRepresentable {
     @ObservedObject var model: EnterKeyModel
-    var onFind: (() -> Void)?
-    var onEditingChanged: (Bool) -> Void
     func makeCoordinator() -> Coordinator { Coordinator(self) }
     func makeUIView(context: Context) -> ProtectedTextView {
         let editor = ProtectedTextView()
@@ -42,14 +38,7 @@ private struct SmartSecureEditor: UIViewRepresentable {
         if #available(iOS 18.0, *) { editor.writingToolsBehavior = .none }
         editor.adjustsFontForContentSizeCategory = true
         editor.delegate = context.coordinator
-        if onFind != nil {
-            // iOS hides the screen's bottom toolbar while editing. Use UIKit's
-            // native keyboard toolbar for the same action; never draw a footer.
-            let toolbar = UIToolbar()
-            toolbar.items = [.flexibleSpace(), context.coordinator.findItem]
-            toolbar.sizeToFit()
-            editor.inputAccessoryView = toolbar
-        }
+
         editor.accessibilityIdentifier = "enterKey.field"
         editor.accessibilityLabel = "Recovery phrase, WIF, hex or extended private key"
         editor.pasteInput = { [weak model] in model?.paste() }
@@ -62,8 +51,6 @@ private struct SmartSecureEditor: UIViewRepresentable {
     }
     func updateUIView(_ editor: ProtectedTextView, context: Context) {
         context.coordinator.parent = self
-        context.coordinator.findItem.isEnabled = model.canFind
-        context.coordinator.findItem.title = model.preparing ? "Finding payments…" : "Find pending payments"
         let font = Geist.uiFont(16, traits: editor.traitCollection)
         let paragraph = NSMutableParagraphStyle()
         paragraph.minimumLineHeight = font.pointSize * 1.55
@@ -99,19 +86,11 @@ private struct SmartSecureEditor: UIViewRepresentable {
     }
     @MainActor final class Coordinator: NSObject, UITextViewDelegate {
         var parent: SmartSecureEditor
-        lazy var findItem: UIBarButtonItem = {
-            let item = UIBarButtonItem(title: "Find pending payments", style: .done, target: self, action: #selector(findPayments))
-            item.accessibilityIdentifier = "enterKey.find"
-            return item
-        }()
-        @objc private func findPayments() { parent.onFind?() }
         var clearID: UUID?
         var revision = -1
         var fontSize: CGFloat = 0
         var wrapping: NSLineBreakMode = .byWordWrapping
         init(_ parent: SmartSecureEditor) { self.parent = parent }
-        func textViewDidBeginEditing(_ textView: UITextView) { parent.onEditingChanged(true) }
-        func textViewDidEndEditing(_ textView: UITextView) { parent.onEditingChanged(false) }
         func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
             let current = textView.text ?? ""
             guard let swiftRange = Range(range, in: current) else { return false }

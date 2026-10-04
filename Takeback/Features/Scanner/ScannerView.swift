@@ -57,14 +57,7 @@ struct ScannerView: View {
                         .accessibilityIdentifier("scanner.close")
                 }
             }
-            NativeBottomBar {
-                if model.access == .unavailable && model.event == .scanning {
-                    Button("Open Settings") {
-                        if let url = URL(string: UIApplication.openSettingsURLString) { openURL(url) }
-                    }.accessibilityIdentifier("scanner.settings")
-                }
-                photoButton
-            }
+
             if model.hasTorch && model.access == .ready {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: model.toggleTorch) {
@@ -74,6 +67,14 @@ struct ScannerView: View {
                     .accessibilityIdentifier("scanner.torch")
                 }
             }
+        }
+        .bottomActions {
+            if model.access == .unavailable && model.event == .scanning {
+                PrimaryButton(title: "Open Settings") {
+                    if let url = URL(string: UIApplication.openSettingsURLString) { openURL(url) }
+                }.accessibilityIdentifier("scanner.settings")
+            }
+            photoButton
         }
         .sheet(isPresented: $model.choosingPhoto) { ScannerPhotoPicker(model: model).secretPrivacy().ignoresSafeArea() }
         .onAppear { model.onResult = onResult; if startsCamera { model.activate() } }
@@ -85,14 +86,7 @@ struct ScannerView: View {
         .onChange(of: model.isClosed) { _, closed in if closed { dismiss() } }
     }
     private var photoButton: some View {
-        Button { model.choosePhoto() } label: {
-            HStack {
-                Image(systemName: "photo").accessibilityHidden(true)
-                Text("Choose photo")
-            }
-        }
-            .accessibilityLabel("Choose photo")
-            .disabled(model.isFound || model.decodingPhoto)
+        SecondaryButton(title: "Choose photo", symbol: "photo", filled: true, isEnabled: !model.isFound && !model.decodingPhoto, action: model.choosePhoto)
             .accessibilityIdentifier("scanner.photo")
     }
     @ViewBuilder private var status: some View {

@@ -54,14 +54,14 @@ import XCTest
     func testLinkedWarningAndPinnedButtonInAX5BothOrientations() {
         let app = openCancel(linked:true,ax:true)
         let button = app.buttons["cancel.submit"]
-        XCTAssertTrue(button.isHittable);XCTAssertTrue(app.toolbars.buttons.matching(identifier: button.identifier).firstMatch.exists);capture("linked-AX5",app)
+        XCTAssertTrue(button.isHittable);XCTAssertEqual(app.buttons.matching(identifier: button.identifier).firstMatch.frame.height, 60, accuracy: 1);capture("linked-AX5",app)
         let warning = app.staticTexts["This also cancels a later payment"]
         for _ in 0..<8 where !warning.isHittable { app.scrollViews.element(boundBy:max(0,app.scrollViews.count-1)).swipeUp() }
         XCTAssertTrue(app.staticTexts["This also cancels a later payment"].exists)
         XCUIDevice.shared.orientation = .landscapeLeft;defer { XCUIDevice.shared.orientation = .portrait }
         let rotated = NSPredicate { _,_ in app.frame.width > app.frame.height }
         XCTAssertEqual(XCTWaiter.wait(for:[XCTNSPredicateExpectation(predicate:rotated,object:nil)],timeout:5),.completed)
-        XCTAssertTrue(button.isHittable);XCTAssertTrue(app.toolbars.buttons.matching(identifier: button.identifier).firstMatch.exists);capture("linked-landscape-AX5",app)
+        XCTAssertTrue(button.isHittable);XCTAssertEqual(app.buttons.matching(identifier: button.identifier).firstMatch.frame.height, 60, accuracy: 1);capture("linked-landscape-AX5",app)
     }
     private func capture(_ name:String,_ app:XCUIApplication) {
         let a=XCTAttachment(screenshot:XCUIScreen.main.screenshot());a.name=name;a.lifetime = .keepAlways;add(a)

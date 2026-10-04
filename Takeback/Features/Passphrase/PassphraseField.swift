@@ -4,13 +4,11 @@ import UIKit
 struct PassphraseField: View {
     @ObservedObject var model: PassphraseModel
     var autofocus = true
-    var onRemove: (() -> Void)? = nil
-    var onEditingChanged: (Bool) -> Void = { _ in }
     @State private var revealed = false
 
     var body: some View {
         HStack(spacing: 0) {
-            PassphraseEditor(model: model, revealed: revealed, autofocus: autofocus, onRemove: onRemove, onEditingChanged: onEditingChanged)
+            PassphraseEditor(model: model, revealed: revealed, autofocus: autofocus)
                 .frame(maxWidth: .infinity)
             Button { revealed.toggle() } label: {
                 Image(systemName: revealed ? "eye.slash" : "eye")
@@ -32,8 +30,6 @@ private struct PassphraseEditor: UIViewControllerRepresentable {
     @ObservedObject var model: PassphraseModel
     let revealed: Bool
     let autofocus: Bool
-    let onRemove: (() -> Void)?
-    let onEditingChanged: (Bool) -> Void
 
     func makeCoordinator() -> Coordinator { Coordinator(self) }
     func makeUIViewController(context: Context) -> PassphraseEditorController {
@@ -52,15 +48,7 @@ private struct PassphraseEditor: UIViewControllerRepresentable {
         field.keyboardType = .default
         field.returnKeyType = .done
         field.delegate = context.coordinator
-        if model.isEditing, onRemove != nil {
-            let item = UIBarButtonItem(title: "Remove passphrase", style: .plain, target: context.coordinator, action: #selector(Coordinator.removePassphrase))
-            item.tintColor = .systemRed
-            item.accessibilityIdentifier = "passphrase.remove"
-            let toolbar = UIToolbar()
-            toolbar.items = [.flexibleSpace(), item]
-            toolbar.sizeToFit()
-            field.inputAccessoryView = toolbar
-        }
+
         field.accessibilityLabel = "Passphrase"
         field.accessibilityIdentifier = "passphrase.field"
         field.addTarget(context.coordinator, action: #selector(Coordinator.changed(_:)), for: .editingChanged)
@@ -96,9 +84,6 @@ private struct PassphraseEditor: UIViewControllerRepresentable {
         var parent: PassphraseEditor
         var clearID: UUID?
         init(_ parent: PassphraseEditor) { self.parent = parent }
-        @objc func removePassphrase() { parent.onRemove?() }
-        func textFieldDidBeginEditing(_ textField: UITextField) { parent.onEditingChanged(true) }
-        func textFieldDidEndEditing(_ textField: UITextField) { parent.onEditingChanged(false) }
         func textField(_ field: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
             guard !parent.model.isClosed else { return false }
             let current = field.text ?? ""

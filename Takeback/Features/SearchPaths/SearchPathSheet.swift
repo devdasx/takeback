@@ -89,17 +89,13 @@ struct SearchPathSheet: View {
 
                 }.padding(20).frame(maxWidth: 520).frame(maxWidth: .infinity)
             }.scrollDismissesKeyboard(.interactively).background(Theme.bg).accessibilityIdentifier("path.content")
-                .toolbar {
-                    if editing {
-                        NativeBottomBar {
-                            Button("Remove path", role: .destructive) {
-                                var next = selection
-                                next.custom.removeAll { $0.id == initial.id }
-                                session.searchSelection = next
-                                dismiss()
-                            }.accessibilityIdentifier("path.remove")
-                        }
-                    }
+                .bottomActions(isVisible: editing, adaptsToSplit: false) {
+                    SecondaryButton(title: "Remove path", role: .destructive) {
+                        var next = selection
+                        next.custom.removeAll { $0.id == initial.id }
+                        session.searchSelection = next
+                        dismiss()
+                    }.accessibilityIdentifier("path.remove")
                 }
         }
         .task(id: candidate) { await derivePreview() }

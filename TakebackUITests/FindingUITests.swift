@@ -34,11 +34,7 @@ import XCTest
     func testPhraseDeepSearchAndBackKeepKey() {
         let app = enter("-finding-ui-none", phrase: true)
         let deep = app.buttons["finding.deep"]
-        if !deep.exists || !deep.isHittable {
-            let more = app.toolbars.buttons["ToolbarOverflowBarButtonItem"]
-            XCTAssertTrue(more.waitForExistence(timeout: 5)); more.tap()
-        }
-        let action = deep.exists ? deep : app.buttons["Search 100 addresses"]
+        let action = deep
         XCTAssertTrue(action.waitForExistence(timeout: 5)); action.tap()
         XCTAssertTrue(app.staticTexts["Checked 100 addresses per path on 4 paths and found nothing waiting."].waitForExistence(timeout: 5))
         app.navigationBars.buttons.firstMatch.tap()
@@ -62,7 +58,7 @@ import XCTest
         let app = enter("-finding-ui-none", ax: true)
         let action = app.buttons["finding.different"]
         XCTAssertTrue(action.waitForExistence(timeout: 5)); XCTAssertTrue(action.isHittable)
-        XCTAssertTrue(app.toolbars.buttons.matching(identifier: action.identifier).firstMatch.exists)
+        XCTAssertEqual(app.buttons.matching(identifier: action.identifier).firstMatch.frame.height, 60, accuracy: 1)
         capture("finding-AX5", app)
         XCUIDevice.shared.orientation = .landscapeLeft
         defer { XCUIDevice.shared.orientation = .portrait }

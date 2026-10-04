@@ -47,9 +47,10 @@ import XCTest
     }
 
     private func bottomAction(_ id: String, in app: XCUIApplication, file: StaticString = #filePath, line: UInt = #line) {
-        let button = app.toolbars.buttons[id]
+        let button = app.buttons[id]
+        XCTAssertFalse(app.toolbars.buttons[id].exists, "Bottom actions must not use Liquid Glass toolbars", file: file, line: line)
         visible(button, file: file, line: line)
-        XCTAssertTrue(app.frame.contains(button.frame), "The native toolbar action must stay within the screen", file: file, line: line)
+        XCTAssertTrue(app.frame.contains(button.frame), "The pinned action must stay within the screen", file: file, line: line)
     }
 
     func testNativeBarsWelcomeSourceAndKeyboard() {
@@ -58,16 +59,20 @@ import XCTest
         XCTAssertTrue(app.navigationBars.buttons["welcome.settings"].exists)
         bottomAction("welcome.cancel", in: app)
         bottomAction("welcome.howItWorks", in: app)
-        capture("native-bars-welcome")
+        XCTAssertEqual(app.buttons["welcome.cancel"].frame.height, 56, accuracy: 1)
+        XCTAssertEqual(app.buttons["welcome.howItWorks"].frame.height, 48, accuracy: 1)
+        capture("restored-buttons-welcome")
         reveal(app.buttons["welcome.source"], in: app); app.buttons["welcome.source"].tap()
         visible(app.navigationBars["Open source"])
-        let source = app.toolbars.buttons["source.github"]
+        let source = app.buttons["source.github"]
         XCTAssertTrue(source.waitForExistence(timeout: 8))
         XCTAssertGreaterThan(source.frame.width, 200, "The named source action must not collapse to an icon")
         XCTAssertTrue(app.frame.contains(source.frame))
         capture("native-bars-source")
-        // iOS 27's floating sheet toolbar can report a false negative for
-        // isHittable. Test an actual finger tap at the visible control's center.
+        // Native sheets may scale their entire surface during presentation.
+        XCTAssertGreaterThan(source.frame.height, 52)
+        XCTAssertLessThanOrEqual(source.frame.height, 61)
+        // Verify the source action opens the native browser.
         source.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
         let browserClose: XCUIElement
         if #available(iOS 26.0, *) {
@@ -79,10 +84,40 @@ import XCTest
         XCTAssertTrue(app.keyboards.firstMatch.exists)
         bottomAction("enterKey.find", in: app)
         XCTAssertLessThanOrEqual(app.buttons["enterKey.find"].frame.maxY, app.keyboards.firstMatch.frame.minY + 1)
-        capture("native-bars-keyboard")
+        XCTAssertEqual(app.buttons["enterKey.find"].frame.height, 60, accuracy: 1)
+        capture("restored-buttons-keyboard")
         app.buttons["enterKey.settings"].tap(); visible(app.buttons["settings.fee"])
         back(app); bottomAction("enterKey.find", in: app)
         XCTAssertFalse(app.keyboards.firstMatch.exists)
+    }
+
+    func testWelcomeAndKeyKeepScrollGuttersInSplitLayout() {
+        let app = launch()
+        visible(app.buttons["welcome.cancel"])
+        XCTAssertEqual(app.scrollViews["welcome.content"].frame.width, app.frame.width, accuracy: 1)
+        XCUIDevice.shared.orientation = .landscapeLeft
+        defer { XCUIDevice.shared.orientation = .portrait }
+        let rotated = NSPredicate { _, _ in app.frame.width > app.frame.height }
+        XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: rotated, object: nil)], timeout: 5), .completed)
+        let source = app.buttons["welcome.source"]
+        let welcomeColumn = app.scrollViews.containing(.button, identifier: "welcome.source").firstMatch
+        // Scroll in the visible content area, above the pinned bottom actions.
+        for _ in 0..<6 where source.frame.maxY > app.buttons["welcome.cancel"].frame.minY - 12 {
+            welcomeColumn.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.52))
+                .press(forDuration: 0.05, thenDragTo: welcomeColumn.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.25)))
+        }
+        visible(source)
+        capture("welcome-scroll-gutters-split")
+        XCTAssertTrue(app.frame.contains(app.buttons["welcome.source"].frame))
+        app.buttons["welcome.cancel"].tap()
+        let field = app.textViews["enterKey.field"]
+        visible(field)
+        let column = app.scrollViews.containing(.textView, identifier: "enterKey.field").firstMatch
+        XCTAssertGreaterThanOrEqual(field.frame.minX - column.frame.minX, 47)
+        XCTAssertGreaterThanOrEqual(column.frame.maxX - field.frame.maxX, 47)
+        capture("key-scroll-gutters-split")
+        back(app)
+        visible(app.buttons["welcome.cancel"])
     }
 
     func testNativeBarsLongFindingAndResultActions() {
@@ -90,12 +125,7 @@ import XCTest
         app.buttons["enterKey.find"].tap()
         bottomAction("finding.different", in: app)
         let deep = app.buttons["finding.deep"]
-        if !deep.exists || !deep.isHittable {
-            let overflow = app.toolbars.buttons["ToolbarOverflowBarButtonItem"]
-            visible(overflow); overflow.tap()
-        }
-        // The system may represent overflow entries as native menu items.
-        let search = deep.exists ? deep : app.buttons["Search 100 addresses"]
+        let search = deep
         visible(search)
         capture("native-bars-finding")
         search.tap()

@@ -5,7 +5,6 @@ struct EnterKeyView: View {
     @ObservedObject private var session: SecretSession
     @StateObject private var model: EnterKeyModel
     @State private var showsPassphrase = false
-    @State private var editingKey = false
     @Environment(\.openURL) private var openURL
 
     init(router: WelcomeRouter, session: SecretSession, model: EnterKeyModel? = nil) {
@@ -22,12 +21,16 @@ struct EnterKeyView: View {
                         ScrollView {
                             VStack(alignment: .leading, spacing: 24) { introduction(metrics); memoryNote }
                                 .frame(maxWidth: 440).padding(.top, 24)
+                                .padding(.horizontal, 48).frame(maxWidth: .infinity)
                         }
                         .scrollBounceBehavior(.basedOnSize)
-                        .padding(.horizontal, 48).frame(maxWidth: .infinity)
-                        ScrollView { form(metrics).frame(maxWidth: 440).padding(.top, 24) }
+                        .frame(maxWidth: .infinity)
+                        ScrollView {
+                            form(metrics).frame(maxWidth: 440).padding(.top, 24)
+                                .padding(.horizontal, 48).frame(maxWidth: .infinity)
+                        }
                             .scrollBounceBehavior(.basedOnSize)
-                            .padding(.horizontal, 48).frame(maxWidth: .infinity)
+                            .frame(maxWidth: .infinity)
                     }
                 } else {
                     ScrollView {
@@ -52,16 +55,15 @@ struct EnterKeyView: View {
         .nativeNavigation()
         .background(NavigationEditingBoundary())
         .toolbar {
-            if !editingKey {
-                NativeBottomBar {
-                    PrimaryButton(title: model.preparing ? "Finding payments…" : "Find pending payments", isEnabled: model.canFind, action: findPayments)
-                        .accessibilityIdentifier("enterKey.find")
-                }
-            }
+
             ToolbarItem(placement: .topBarTrailing) {
                 Button(action: router.openSettings) { Image(systemName: "gearshape") }
                     .accessibilityLabel("Settings").accessibilityIdentifier("enterKey.settings")
             }
+        }
+        .bottomActions {
+            PrimaryButton(title: model.preparing ? "Finding payments…" : "Find pending payments", isEnabled: model.canFind, action: findPayments)
+                .accessibilityIdentifier("enterKey.find")
         }
         .onAppear { model.refresh() }
         .onDisappear { model.suspend() }
@@ -84,7 +86,7 @@ struct EnterKeyView: View {
     }
     private func form(_ metrics: LayoutMetrics) -> some View {
         VStack(spacing: 12) {
-            SmartSecretField(model: model, height: metrics.isShort ? 104 : metrics.mode == .compact ? 124 : 140, onFind: findPayments, onEditingChanged: { editingKey = $0 })
+            SmartSecretField(model: model, height: metrics.isShort ? 104 : metrics.mode == .compact ? 124 : 140)
             HStack(alignment: .top, spacing: 12) {
                 HStack(alignment: .firstTextBaseline, spacing: 8) {
                     Circle().fill(model.canFind ? Theme.fg : Theme.line).frame(width: 6, height: 6)

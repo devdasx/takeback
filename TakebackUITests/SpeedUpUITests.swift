@@ -10,7 +10,7 @@ import XCTest
     }
     func testDefaultCancelSwitchAndSharedCustomFeeOnSE() {
         let app = open(), button = app.buttons["cancel.submit"]
-        XCTAssertEqual(button.label, "Cancel payment"); XCTAssertTrue(button.isHittable); XCTAssertTrue(app.toolbars.buttons.matching(identifier: button.identifier).firstMatch.exists)
+        XCTAssertEqual(button.label, "Cancel payment"); XCTAssertTrue(button.isHittable); XCTAssertEqual(app.buttons.matching(identifier: button.identifier).firstMatch.frame.height, 60, accuracy: 1)
         let segment = app.segmentedControls["action.mode"]
         XCTAssertTrue(segment.exists); segment.buttons["Speed up"].tap()
         XCTAssertEqual(button.label, "Speed up payment"); XCTAssertTrue(button.isHittable)
@@ -33,7 +33,7 @@ import XCTest
     }
     func testAX5MenuAndPinnedPrimaryOnSE() {
         let app = open(ax: true), button = app.buttons["cancel.submit"]
-        XCTAssertTrue(button.isHittable); XCTAssertTrue(app.toolbars.buttons.matching(identifier: button.identifier).firstMatch.exists)
+        XCTAssertTrue(button.isHittable); XCTAssertEqual(app.buttons.matching(identifier: button.identifier).firstMatch.frame.height, 60, accuracy: 1)
         let menu = app.buttons["action.modeMenu"]; XCTAssertTrue(menu.isHittable); menu.tap()
         app.buttons["Speed up"].firstMatch.tap()
         XCTAssertEqual(button.label, "Speed up payment")

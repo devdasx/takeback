@@ -61,18 +61,19 @@ struct AdaptiveLayout<Header: View, Content: View>: View {
     var body: some View {
         Group {
             if metrics.mode == .split {
-                HStack(spacing: actionStyle ? 64 : 0) {
-                    ScrollView { header().frame(maxWidth: actionStyle ? 560 : 440) }
+                HStack(spacing: 0) {
+                    ScrollView {
+                        header().frame(maxWidth: actionStyle ? 560 : 440)
+                            .padding(.leading, 48)
+                            .padding(.trailing, actionStyle ? 32 : 48)
+                            .frame(maxWidth: .infinity)
+                    }
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .padding(.horizontal, actionStyle ? 0 : 48)
                     column(showHeader: false)
-                        .padding(.horizontal, actionStyle ? 0 : 48)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-                }.padding(.horizontal, actionStyle ? 48 : 0)
+                }
             } else {
                 column(showHeader: true)
-                    .frame(maxWidth: actionStyle && metrics.mode != .compact ? 560 : metrics.mode.columnMax)
-                    .padding(.horizontal, metrics.mode.horizontalPadding)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
@@ -80,16 +81,17 @@ struct AdaptiveLayout<Header: View, Content: View>: View {
     }
 
     private func column(showHeader: Bool) -> some View {
-        VStack(spacing: 0) {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 24) {
-                    if showHeader { header() }
-                    content()
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 24) {
+                if showHeader { header() }
+                content()
             }
-
+            .frame(maxWidth: actionStyle && metrics.mode != .compact ? 560 : metrics.mode.columnMax, alignment: .leading)
+            // Keep gutters inside the viewport: native switches and control
+            // effects can draw beyond their layout bounds on either side.
+            .padding(.leading, actionStyle && metrics.mode == .split ? 32 : metrics.mode.horizontalPadding)
+            .padding(.trailing, metrics.mode.horizontalPadding)
+            .frame(maxWidth: .infinity)
         }
-        .frame(maxWidth: actionStyle && metrics.mode != .compact ? 560 : metrics.mode.columnMax)
     }
 }

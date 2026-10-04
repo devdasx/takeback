@@ -22,7 +22,7 @@ import XCTest
         XCTAssertTrue(app.staticTexts["Camera access is off"].waitForExistence(timeout: 5))
         XCTAssertFalse(app.buttons["scanner.torch"].exists)
         XCTAssertTrue(app.buttons["scanner.settings"].isHittable)
-        XCTAssertTrue(app.toolbars.buttons["scanner.photo"].isHittable)
+        XCTAssertTrue(app.buttons["scanner.photo"].isHittable)
         XCTAssertGreaterThan(app.buttons["scanner.photo"].frame.width, 100, "Choose photo must keep its visible label")
         capture("scanner-no-camera", app)
         app.buttons["scanner.photo"].tap()
@@ -61,7 +61,7 @@ import XCTest
         XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: rotated, object: nil)], timeout: 5), .completed)
         XCTAssertTrue(app.navigationBars["Scan"].buttons.firstMatch.isHittable)
         XCTAssertTrue(app.buttons["scanner.settings"].isHittable); XCTAssertTrue(app.buttons["scanner.photo"].isHittable)
-        XCTAssertTrue(app.toolbars.buttons["scanner.photo"].isHittable)
+        XCTAssertTrue(app.buttons["scanner.photo"].isHittable)
         Thread.sleep(forTimeInterval: 1) // Capture after the native rotation animation has finished.
         XCTAssertGreaterThanOrEqual(app.navigationBars["Scan"].buttons.firstMatch.frame.minY, 0)
         XCTAssertLessThanOrEqual(app.navigationBars["Scan"].buttons.firstMatch.frame.maxY, app.frame.height)

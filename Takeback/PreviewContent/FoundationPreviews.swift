@@ -16,12 +16,12 @@ struct FoundationPreview: View {
             }
         }
         .background(Theme.bg.ignoresSafeArea()).takebackStyle()
-        .toolbar { NativeBottomBar {
+        .bottomActions {
             Group {
                     PrimaryButton(title: "Primary button") { }
                     SecondaryButton(title: "Secondary button") { }
                 }
-        } }
+        }
     }
 }
 

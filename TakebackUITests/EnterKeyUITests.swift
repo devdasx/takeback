@@ -63,7 +63,7 @@ import XCTest
         app.launchArguments += ["-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
         openEntry(app)
         XCTAssertTrue(app.buttons["enterKey.find"].isHittable)
-        XCTAssertTrue(app.toolbars.buttons.matching(identifier: app.buttons["enterKey.find"].identifier).firstMatch.exists)
+        XCTAssertEqual(app.buttons.matching(identifier: app.buttons["enterKey.find"].identifier).firstMatch.frame.height, 60, accuracy: 1)
         capture("entry-AX5", app)
         XCUIDevice.shared.orientation = .landscapeLeft
         defer { XCUIDevice.shared.orientation = .portrait }

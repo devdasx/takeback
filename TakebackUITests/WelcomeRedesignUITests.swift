@@ -12,8 +12,8 @@ import XCTest
         let primary = app.buttons["welcome.cancel"], source = app.buttons["welcome.source"]
         XCTAssertTrue(primary.waitForExistence(timeout: 8)); XCTAssertTrue(primary.isHittable)
         XCTAssertEqual(primary.label, "Cancel a payment")
-        XCTAssertTrue(app.toolbars.buttons.matching(identifier: primary.identifier).firstMatch.exists)
-        XCTAssertTrue(app.toolbars.buttons.matching(identifier: app.buttons["welcome.howItWorks"].identifier).firstMatch.exists)
+        XCTAssertEqual(app.buttons.matching(identifier: primary.identifier).firstMatch.frame.height, 56, accuracy: 1)
+        XCTAssertEqual(app.buttons.matching(identifier: app.buttons["welcome.howItWorks"].identifier).firstMatch.frame.height, 48, accuracy: 1)
         capture("welcome-initial")
         if ProcessInfo.processInfo.environment["TAKEBACK_WELCOME_AX3"] != "1" {
             XCTAssertTrue(source.isHittable, "Trust points must be visible at default text size")

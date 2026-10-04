@@ -1,5 +1,25 @@
 import SwiftUI
 
+private struct SettingsListInsetKey: EnvironmentKey {
+    static let defaultValue: CGFloat = 0
+}
+
+private extension EnvironmentValues {
+    var settingsListInset: CGFloat {
+        get { self[SettingsListInsetKey.self] }
+        set { self[SettingsListInsetKey.self] = newValue }
+    }
+}
+
+private struct SettingsSectionHeader: View {
+    @Environment(\.settingsListInset) private var inset
+    let title: String
+    var body: some View {
+        // List section headers do not inherit the row content margins.
+        SectionHeader(title: title).padding(.horizontal, inset).listRowInsets(EdgeInsets())
+    }
+}
+
 struct SettingsPage<Content: View>: View {
     @ObservedObject var router: WelcomeRouter
     let title: String
@@ -14,13 +34,14 @@ struct SettingsPage<Content: View>: View {
             VStack(spacing: 0) {
                 if metrics.mode == .split {
                     HStack(alignment: .top, spacing: 0) {
-                        ScrollView { header(metrics).frame(maxWidth: 440).padding(.top, 24) }
-                            .padding(.horizontal, 48).frame(maxWidth: .infinity)
-                        list(metrics, header: false).padding(.horizontal, 48).frame(maxWidth: .infinity)
+                        ScrollView {
+                            header(metrics).frame(maxWidth: 440).padding(.top, 24)
+                                .padding(.horizontal, 48).frame(maxWidth: .infinity)
+                        }.frame(maxWidth: .infinity)
+                        list(metrics, header: false).frame(maxWidth: .infinity)
                     }
                 } else {
-                    list(metrics, header: true).frame(maxWidth: metrics.mode.columnMax)
-                        .padding(.horizontal, metrics.mode.horizontalPadding).frame(maxWidth: .infinity)
+                    list(metrics, header: true).frame(maxWidth: .infinity)
                 }
             }
         }.background(Theme.bg.ignoresSafeArea()).takebackStyle().nativeNavigation()
@@ -42,11 +63,16 @@ struct SettingsPage<Content: View>: View {
             .fixedSize(horizontal: false, vertical: true).frame(maxWidth: .infinity, alignment: centeredHeader ? .center : .leading)
     }
     private func list(_ metrics: LayoutMetrics, header showHeader: Bool) -> some View {
-        List {
-            if showHeader { header(metrics).padding(.top, 24).padding(.bottom, 28).listRowInsets(EdgeInsets()).listRowSeparator(.hidden).listRowBackground(Color.clear) }
-            content().listRowInsets(EdgeInsets()).listRowSeparator(.hidden).listRowBackground(Color.clear)
+        let width = metrics.safeSize.width / (metrics.mode == .split ? 2 : 1)
+        let inset = max(metrics.mode.horizontalPadding, (width - metrics.mode.columnMax) / 2)
+        let rowInsets = EdgeInsets(top: 0, leading: inset, bottom: 0, trailing: inset)
+        return List {
+            if showHeader { header(metrics).padding(.top, 24).padding(.bottom, 28).listRowInsets(rowInsets).listRowSeparator(.hidden).listRowBackground(Color.clear) }
+            content().listRowInsets(rowInsets).listRowSeparator(.hidden).listRowBackground(Color.clear)
         }
         .listStyle(.plain).scrollContentBackground(.hidden).environment(\.defaultMinListRowHeight, 0)
+        .contentMargins(.horizontal, 0, for: .scrollContent)
+        .environment(\.settingsListInset, inset)
         .listSectionSpacing(.custom(24)).scrollDismissesKeyboard(.interactively)
     }
 }
@@ -60,16 +86,16 @@ struct SettingsView: View {
         SettingsPage(router: router, title: "Settings", subtitle: "No accounts, no history and no wallet. Keys are never saved.") {
             Section {
                 IndexRow(symbol: "bolt", title: "Default fee", value: (FeeSpeed(rawValue: fee).flatMap { $0 == .custom ? nil : $0 } ?? .fast).title) { router.path.append(.defaultFee) }.accessibilityIdentifier("settings.fee")
-            } header: { SectionHeader(title: "Fees") }
+            } header: { SettingsSectionHeader(title: "Fees") }
             Section {
                 IndexRow(symbol: "globe", title: "Servers", value: preferences.usesOwnServer ? "Only my servers" : "Automatic", action: router.openServerSettings).accessibilityIdentifier("settings.server")
-            } header: { SectionHeader(title: "Network") }
+            } header: { SettingsSectionHeader(title: "Network") }
             Section {
                 SearchDepthControls(accounts: $searchDefaults.accounts, addresses: $searchDefaults.addresses)
-            } header: { SectionHeader(title: "Search") }
+            } header: { SettingsSectionHeader(title: "Search") }
             Section {
                 IndexRow(symbol: "info.circle", title: "About Takeback", value: AppConfiguration.version) { router.path.append(.about) }.accessibilityIdentifier("settings.about")
-            } header: { SectionHeader(title: "About") }
+            } header: { SettingsSectionHeader(title: "About") }
         }.accessibilityElement(children: .contain).accessibilityIdentifier("route.settings")
     }
 }
@@ -158,7 +184,7 @@ struct ServerSettingsView: View {
                 }.onMove(perform: preferences.move)
                 Button("Add server…") { host = ""; tcp = false; adding = true }.font(Geist.font(16)).frame(minHeight: 52).accessibilityIdentifier("server.add")
                 Button("Check all servers") { model.checkAll(force: true) }.font(Geist.font(16)).frame(minHeight: 52)
-            } header: { SectionHeader(title: "Servers") }
+            } header: { SettingsSectionHeader(title: "Servers") }
             Text("Default list from Muun’s open-source recovery tool · \(ElectrumSeed.bundled.commit.prefix(7))").font(Geist.font(13)).foregroundStyle(Theme.mute).padding(.vertical, 16)
             Toggle("Show amounts in USD", isOn: $showUSD).font(Geist.font(16)).tint(Theme.fg).padding(.vertical, 16)
         }.environment(\.editMode, .constant(preferences.usesOwnServer ? .active : .inactive))

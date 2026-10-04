@@ -39,14 +39,12 @@ struct PaymentExplanation: View {
             }
         }
         .background(Theme.bg.ignoresSafeArea()).takebackStyle().nativeNavigation()
-        .toolbar {
-            NativeBottomBar {
-                if payment.cancellation != nil, let url = payment.replacementURL {
-                    SecondaryButton(title: "View on mempool.space ↗") { openURL(url) }
-                        .accessibilityIdentifier("paymentExplanation.explorer")
-                }
-                PrimaryButton(title: "Done", action: router.goBack).accessibilityIdentifier("paymentExplanation.done")
+        .bottomActions {
+            if payment.cancellation != nil, let url = payment.replacementURL {
+                SecondaryButton(title: "View on mempool.space ↗") { openURL(url) }
+                    .accessibilityIdentifier("paymentExplanation.explorer")
             }
+            PrimaryButton(title: "Done", action: router.goBack).accessibilityIdentifier("paymentExplanation.done")
         }
         .onChange(of: session.wipeGeneration) { _, _ in router.backToKey() }
     }

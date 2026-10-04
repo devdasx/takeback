@@ -26,12 +26,10 @@ struct OpenSourceSheet: View {
                 OpenSourceContent().padding(.horizontal, 20).padding(.vertical, 20)
                     .frame(maxWidth: 560).frame(maxWidth: .infinity)
             }.scrollBounceBehavior(.basedOnSize).accessibilityIdentifier("source.content")
-                .toolbar {
-                    NativeBottomBar {
-                        PrimaryButton(title: "View source code on GitHub", symbol: "chevron.left.forwardslash.chevron.right") {
-                            showsBrowser = true
-                        }.accessibilityIdentifier("source.github")
-                    }
+                .bottomActions(adaptsToSplit: false) {
+                    PrimaryButton(title: "View source code on GitHub", symbol: "chevron.left.forwardslash.chevron.right") {
+                        showsBrowser = true
+                    }.accessibilityIdentifier("source.github")
                 }.background(Theme.bg)
         }.sheet(isPresented: $showsBrowser) { SourceBrowser(url: sourceURL).ignoresSafeArea() }
     }
